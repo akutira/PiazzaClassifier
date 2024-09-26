@@ -1,0 +1,42 @@
+Main plan:
+IDEA: take a Piazza post and obtain a category from this 
+
+Have a unique words function 
+CSV file has tag(label) and content
+have a function of how to split a string into words
+
+make classifier a class:
+needs to contain the amount of posts and unique words (use function for that)
+
+need to make Label class:
+friend of classifier class
+needs to contain map of words to the amount 
+a map of words to labels
+
+Bag of words model: Piazza post is a bag of words (ignores amount and order are not considered), uses conditional probability
+
+Classifier needs to be trained on previous Piazza posts though: make a function that takes in a csv file and records:
+- total number of posts (member variable)
+- number of unique words (use unique words function) (member variable)
+- For each word w, the number of posts in the entire training set that contains w (content) (function)
+- For each label C, the number of posts with that label (label) (function)
+- For each label C and word w, the number of posts with label C and word w (label and content) (function)
+
+
+Prediction: Determine probable label C using log-probability funciton. Find highest log-prob (if tied use the first alphabetically)
+log-liklihood types: 
+log likelihood of label C given piazza post X is lnP(C) + lnP(w1 | C) .... + lnP(wn | C)
+
+lnP(C) = ln(num posts with Label/ total num of posts)
+lnP(w | C) = ln(num posts with label with w / num posts with label) //how likely to see word in posts with label C
+If w in post labelled C == 0 then lnP(w | C) = ln(num posts with w / total num of posts)
+If w in overall_set == 0 then lnP(w | C) ln(1.0 / total num of posts)
+
+- First, your application should read posts from a file (e.g. train_small.csv)
+ and use them to train the classifier. (train function) CHECK
+- After training, your classifier abstraction should store the information 
+mentioned in the Training section. (Store training data function) I combined it in train. CHECK 
+Your classifier should be able to compute the log-probability score of a 
+post (i.e. a collection of words) given a particular label. 
+To predict a label for a new post, it should choose the label that gives the highest log-probability score. 
+Read posts from a file (e.g. test_small.csv) to use as testing data. For each post, predict a label using your classifier.
